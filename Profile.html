@@ -1,0 +1,423 @@
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+&lt;title&gt;Your Name&lt;/title&gt;
+
+&lt;style&gt;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --accent: #b58cff;
+    --text: #ffffff;
+    --muted: #aaa;
+}
+
+html, body {
+    width: 100%;
+    min-height: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--text);
+    background: #08080c;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+/* BACKGROUND */
+
+.background {
+    position: fixed;
+    inset: 0;
+    z-index: -5;
+    background:
+        linear-gradient(rgba(0,0,0,.48), rgba(0,0,0,.72)),
+        url("background.jpg") center/cover no-repeat;
+    filter: blur(0px);
+    transform: scale(1.03);
+}
+
+.background::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        circle at center,
+        transparent 0%,
+        rgba(0,0,0,.45) 100%
+    );
+}
+
+/* PARTICLES */
+
+.particles {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.particle {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: var(--accent);
+    border-radius: 50%;
+    opacity: .5;
+    animation: float linear infinite;
+}
+
+@keyframes float {
+    from {
+        transform: translateY(110vh);
+    }
+    to {
+        transform: translateY(-10vh);
+    }
+}
+
+/* MAIN */
+
+.wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 15px;
+}
+
+.card {
+    width: min(560px, 100%);
+    padding: 35px 30px;
+    text-align: center;
+
+    background: rgba(15, 15, 20, .68);
+    border: 1px solid rgba(255,255,255,.09);
+    border-radius: 24px;
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    box-shadow:
+        0 20px 80px rgba(0,0,0,.55),
+        0 0 50px rgba(181,140,255,.08);
+
+    animation: appear .8s ease;
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(.97);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* AVATAR */
+
+.avatar {
+    width: 115px;
+    height: 115px;
+    object-fit: cover;
+    border-radius: 50%;
+
+    border: 3px solid rgba(255,255,255,.85);
+
+    box-shadow:
+        0 0 25px rgba(181,140,255,.45);
+
+    margin-bottom: 18px;
+
+    transition: .3s ease;
+}
+
+.avatar:hover {
+    transform: scale(1.06);
+    box-shadow:
+        0 0 40px rgba(181,140,255,.75);
+}
+
+/* NAME */
+
+.name {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    margin-bottom: 8px;
+}
+
+.username {
+    color: var(--accent);
+}
+
+/* BIO */
+
+.bio {
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.6;
+    margin: 0 auto 25px;
+    max-width: 430px;
+}
+
+/* LINKS */
+
+.links {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.link {
+    text-decoration: none;
+    color: white;
+
+    padding: 13px 15px;
+
+    border-radius: 13px;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.07);
+
+    transition: .25s ease;
+}
+
+.link:hover {
+    background: var(--accent);
+    color: #fff;
+
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 8px 25px rgba(181,140,255,.25);
+}
+
+/* PROJECTS */
+
+.section-title {
+    text-align: left;
+    color: #ddd;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
+.projects {
+    display: grid;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.project {
+    text-align: left;
+    padding: 15px;
+
+    border-radius: 14px;
+
+    background: rgba(255,255,255,.045);
+    border: 1px solid rgba(255,255,255,.06);
+
+    transition: .25s ease;
+}
+
+.project:hover {
+    transform: translateX(4px);
+    border-color: rgba(181,140,255,.35);
+}
+
+.project-title {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.project-description {
+    color: #999;
+    font-size: 13px;
+}
+
+/* MUSIC */
+
+.music {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 12px;
+
+    background: rgba(255,255,255,.045);
+    border-radius: 14px;
+}
+
+.music-button {
+    width: 42px;
+    height: 42px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: var(--accent);
+    color: white;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.music-button:hover {
+    transform: scale(1.08);
+}
+
+.music-info {
+    text-align: left;
+    flex: 1;
+}
+
+.music-title {
+    font-size: 14px;
+}
+
+.music-status {
+    color: #888;
+    font-size: 12px;
+    margin-top: 3px;
+}
+
+/* FOOTER */
+
+.footer {
+    margin-top: 22px;
+    color: #666;
+    font-size: 11px;
+}
+
+.views {
+    margin-top: 5px;
+}
+
+/* MOBILE */
+
+@media (max-width: 500px) {
+
+    .card {
+        padding: 28px 20px;
+        border-radius: 20px;
+    }
+
+    .name {
+        font-size: 27px;
+    }
+
+    .links {
+        grid-template-columns: 1fr;
+    }
+
+    .avatar {
+        width: 100px;
+        height: 100px;
+    }
+}
+&lt;/style&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+
+&lt;div class="background"&gt;&lt;/div&gt;
+&lt;div class="particles" id="particles"&gt;&lt;/div&gt;
+
+&lt;div class="wrapper"&gt;
+
+    &lt;main class="card"&gt;
+
+        &lt;!-- AVATAR --&gt;
+        &lt;img
+            class="avatar"
+            src="avatar.jpg"
+            alt="Avatar"
+        &gt;
+
+        &lt;!-- NAME --&gt;
+        &lt;h1 class="name"&gt;
+            Your &lt;span class="username"&gt;Name&lt;/span&gt;
+        &lt;/h1&gt;
+
+        &lt;!-- BIO --&gt;
+        &lt;p class="bio"&gt;
+            Just another person on the internet.&lt;br&gt;
+            I like games, music and programming.
+        &lt;/p&gt;
+
+        &lt;!-- SOCIAL LINKS --&gt;
+
+        &lt;div class="links"&gt;
+
+            &lt;a
+                class="link"
+                href="https://discord.com/"
+                target="_blank"
+            &gt;
+                Discord
+            &lt;/a&gt;
+
+            &lt;a
+                class="link"
+                href="https://github.com/"
+                target="_blank"
+            &gt;
+                GitHub
+            &lt;/a&gt;
+
+            &lt;a
+                class="link"
+                href="#"
+                target="_blank"
+            &gt;
+                YouTube
+            &lt;/a&gt;
+
+            &lt;a
+                class="link"
+                href="#"
+                target="_blank"
+            &gt;
+                Other
+            &lt;/a&gt;
+
+        &lt;/div&gt;
+
+        &lt;!-- PROJECTS --&gt;
+
+        &lt;div class="section-title"&gt;
+            Projects
+        &lt;/div&gt;
+
+        &lt;div class="projects"&gt;
+
+            &lt;div class="project"&gt;
+                &lt;div class="project-title"&gt;
+                    Kuriii
+                &lt;/div&gt;
+
+                &lt;div class="project-description"&gt;
+                    My Discord bot project.
+                &lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;div class="project"&gt;
+                &lt;div class="project-title"&gt;
+                    Project Two
+                &lt;/div&gt;
+
+                &lt;div class="project-description"&gt;
+                    Something I'm currently working on.
+                &lt;/div&gt;
+</code></pre>
