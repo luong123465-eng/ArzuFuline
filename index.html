@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ArzuFuline - Profile</title>
+<title>Mini Dev - Profile</title>
 <!-- Font Awesome & Google Fonts -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -17,38 +17,66 @@
 
 :root {
     --accent: #b58cff;
-    --accent-glow: rgba(181, 140, 255, 0.4);
-    --text: #ffffff;
-    --muted: #a0a0ab;
-    --card-bg: rgba(13, 13, 18, 0.65);
-    --item-bg: rgba(255, 255, 255, 0.04);
-    --item-border: rgba(255, 255, 255, 0.08);
+    --accent-bright: #d4bfff;
+    --accent-glow: rgba(181, 140, 255, 0.6);
+    --bg-dark: #030305;
+    --card-bg: rgba(12, 10, 18, 0.7);
+    --text-light: #ffffff;
+    --text-muted: #a1a1aa;
+    --item-bg: rgba(255, 255, 255, 0.03);
+    --item-border: rgba(181, 140, 255, 0.15);
 }
 
 html, body {
     width: 100%;
-    min-height: 100%;
+    min-height: 100vh;
     font-family: 'Plus Jakarta Sans', sans-serif;
-    color: var(--text);
-    background: #050508;
+    color: var(--text-light);
+    background: var(--bg-dark);
     overflow-x: hidden;
 }
 
-/* BACKGROUND (CÓ THỂ THAY BẰNG ẢNH HOẶC VIDEO) */
+/* HIỆU ỨNG INTRO KHI VÀO TRANG */
+.intro-overlay {
+    position: fixed;
+    inset: 0;
+    background: #030305;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.8s ease, visibility 0.8s;
+}
+
+.intro-overlay.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.intro-logo {
+    font-size: 48px;
+    font-weight: 800;
+    color: #fff;
+    text-shadow: 0 0 20px var(--accent-glow), 0 0 40px var(--accent);
+    animation: pulse 1.5s infinite alternate;
+}
+
+/* BACKGROUND VÀ PARTICLE */
 .background {
     position: fixed;
     inset: 0;
     z-index: -5;
-    /* THAY LINK ẢNH NỀN Ở DƯỚI ĐÂY */
     background: 
-        linear-gradient(to bottom, rgba(5, 5, 8, 0.5), rgba(5, 5, 8, 0.8)),
+        radial-gradient(circle at 50% 20%, rgba(181, 140, 255, 0.15), transparent 70%),
+        radial-gradient(circle at 80% 80%, rgba(138, 43, 226, 0.1), transparent 50%),
+        linear-gradient(to bottom, rgba(3, 3, 5, 0.8), rgba(3, 3, 5, 0.95)),
         url("https://picsum.photos/1920/1080") center/cover no-repeat;
-    filter: blur(4px);
+    filter: blur(8px);
     transform: scale(1.05);
-    transition: transform 0.5s ease-out;
 }
 
-/* HẠT BỤI MỜ (PARTICLES) */
 .particles {
     position: fixed;
     inset: 0;
@@ -58,25 +86,24 @@ html, body {
 
 .particle {
     position: absolute;
-    width: 3px;
-    height: 3px;
-    background: var(--accent);
+    width: 2px;
+    height: 2px;
+    background: #fff;
     border-radius: 50%;
-    opacity: 0.5;
-    box-shadow: 0 0 8px var(--accent);
-    animation: float linear infinite;
+    box-shadow: 0 0 10px var(--accent-bright), 0 0 20px var(--accent);
+    animation: floatParticle linear infinite;
 }
 
-@keyframes float {
+@keyframes floatParticle {
     from {
-        transform: translateY(110vh) scale(0.8);
+        transform: translateY(105vh) scale(0.5);
         opacity: 0;
     }
     50% {
-        opacity: 0.6;
+        opacity: 0.8;
     }
     to {
-        transform: translateY(-10vh) scale(1.2);
+        transform: translateY(-5vh) scale(1.2);
         opacity: 0;
     }
 }
@@ -87,53 +114,79 @@ html, body {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 40px 15px;
+    padding: 40px 20px;
+    perspective: 1000px;
 }
 
-/* CARD CHÍNH VỚI HIỆU ỨNG VÀO TRANG */
+/* CARD CHÍNH KÈM HIỆU ỨNG GLOW & BORDER GRADIENT */
 .card {
+    position: relative;
     width: min(520px, 100%);
-    padding: 40px 30px;
+    padding: 45px 32px;
     text-align: center;
     background: var(--card-bg);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    border: 1px solid var(--item-border);
     border-radius: 28px;
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
     box-shadow:
-        0 30px 100px rgba(0,0,0,0.7),
-        0 0 60px rgba(181,140,255,0.1);
-    animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        0 20px 50px rgba(0, 0, 0, 0.8),
+        0 0 40px rgba(181, 140, 255, 0.15),
+        inset 0 0 15px rgba(255, 255, 255, 0.03);
+    transition: transform 0.2s ease-out, box-shadow 0.3s ease;
+    animation: introCard 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* BADGE FOUNDER AKARI */
+.card:hover {
+    box-shadow:
+        0 25px 60px rgba(0, 0, 0, 0.9),
+        0 0 50px rgba(181, 140, 255, 0.25),
+        inset 0 0 20px rgba(255, 255, 255, 0.05);
+}
+
+/* BADGES */
 .badge-container {
     display: flex;
     justify-content: center;
-    gap: 8px;
-    margin-bottom: 12px;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
 }
 
 .badge {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 6px 14px;
-    background: rgba(181, 140, 255, 0.12);
+    padding: 6px 16px;
+    background: rgba(181, 140, 255, 0.1);
     border: 1px solid rgba(181, 140, 255, 0.3);
     border-radius: 20px;
     font-size: 12px;
-    font-weight: 600;
-    color: var(--accent);
+    font-weight: 700;
+    color: var(--accent-bright);
     letter-spacing: 0.5px;
+    text-shadow: 0 0 8px var(--accent-glow);
+    box-shadow: 0 0 15px rgba(181, 140, 255, 0.1);
 }
 
-/* AVATAR */
+/* AVATAR KÈM KHUNG GLOW */
 .avatar-container {
     position: relative;
-    width: 120px;
-    height: 120px;
-    margin: 0 auto 20px;
+    width: 125px;
+    height: 125px;
+    margin: 0 auto 22px;
+}
+
+.avatar-container::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, var(--accent), #ffffff, var(--accent));
+    z-index: -1;
+    filter: blur(8px);
+    opacity: 0.7;
+    animation: rotateGlow 4s linear infinite;
 }
 
 .avatar {
@@ -141,40 +194,46 @@ html, body {
     height: 100%;
     object-fit: cover;
     border-radius: 50%;
-    border: 3px solid rgba(255,255,255,0.8);
-    box-shadow: 0 0 30px var(--accent-glow);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 2px solid rgba(255, 255, 255, 0.9);
+    transition: transform 0.4s ease;
 }
 
 .avatar:hover {
-    transform: scale(1.08) rotate(3deg);
-    box-shadow: 0 0 50px rgba(181,140,255,0.8);
+    transform: scale(1.05) rotate(4deg);
 }
 
-/* NAME & BIO */
+/* CHỮ NỔI BẬT & HIỆU ỨNG GLOW */
 .name {
-    font-size: 32px;
+    font-size: 34px;
     font-weight: 800;
     letter-spacing: -0.5px;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
+    color: #ffffff;
+    text-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
 }
 
-.username {
-    color: var(--accent);
-    background: linear-gradient(135deg, #fff, var(--accent));
+.glow-text {
+    background: linear-gradient(135deg, #ffffff 0%, var(--accent-bright) 50%, var(--accent) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 10px var(--accent-glow));
+    animation: textGlowPulse 3s ease-in-out infinite alternate;
 }
 
 .bio {
-    color: var(--muted);
+    color: var(--text-muted);
     font-size: 14px;
     line-height: 1.6;
-    margin: 0 auto 25px;
-    max-width: 400px;
+    margin: 0 auto 28px;
+    max-width: 420px;
 }
 
-/* LINKS */
+.bio b {
+    color: #fff;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+}
+
+/* LINKS SOCIAL */
 .links {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -186,35 +245,46 @@ html, body {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 10px;
     text-decoration: none;
-    color: white;
+    color: var(--text-light);
     font-weight: 600;
     font-size: 14px;
-    padding: 12px 16px;
+    padding: 12px 18px;
     border-radius: 14px;
     background: var(--item-bg);
     border: 1px solid var(--item-border);
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
 }
 
 .link:hover {
-    background: var(--accent);
-    color: #000;
-    transform: translateY(-4px);
-    box-shadow: 0 10px 25px var(--accent-glow);
+    background: rgba(181, 140, 255, 0.15);
     border-color: var(--accent);
+    color: #ffffff;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(181, 140, 255, 0.25);
+}
+
+.link i {
+    color: var(--accent-bright);
+    transition: transform 0.3s;
+}
+
+.link:hover i {
+    transform: scale(1.2);
 }
 
 /* SECTIONS */
 .section-title {
     text-align: left;
-    color: var(--muted);
+    color: var(--text-muted);
     font-size: 12px;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
 }
 
 /* PROJECTS */
@@ -229,7 +299,7 @@ html, body {
     align-items: center;
     justify-content: space-between;
     text-align: left;
-    padding: 16px;
+    padding: 16px 20px;
     border-radius: 16px;
     background: var(--item-bg);
     border: 1px solid var(--item-border);
@@ -238,12 +308,9 @@ html, body {
 
 .project:hover {
     transform: translateY(-2px) translateX(4px);
-    border-color: rgba(181,140,255,0.4);
-    background: rgba(255, 255, 255, 0.07);
-}
-
-.project-info {
-    flex: 1;
+    border-color: var(--accent);
+    background: rgba(181, 140, 255, 0.08);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 .project-title {
@@ -253,61 +320,64 @@ html, body {
     display: flex;
     align-items: center;
     gap: 8px;
+    color: #fff;
 }
 
 .project-description {
-    color: var(--muted);
+    color: var(--text-muted);
     font-size: 13px;
 }
 
 .project-tag {
-    font-size: 11px;
+    font-size: 10px;
     padding: 3px 8px;
-    border-radius: 6px;
-    background: rgba(255,255,255,0.1);
-    color: #fff;
+    border-radius: 12px;
+    background: rgba(181, 140, 255, 0.2);
+    color: var(--accent-bright);
+    border: 1px solid rgba(181, 140, 255, 0.3);
 }
 
-/* MUSIC PLAYER ĐẸP HƠN */
+/* MUSIC PLAYER */
 .music-player {
     background: var(--item-bg);
     border: 1px solid var(--item-border);
-    border-radius: 18px;
-    padding: 16px;
-    transition: border-color 0.3s;
+    border-radius: 20px;
+    padding: 18px;
+    transition: all 0.3s ease;
 }
 
 .music-player:hover {
-    border-color: rgba(181, 140, 255, 0.3);
+    border-color: var(--accent);
+    box-shadow: 0 0 20px rgba(181, 140, 255, 0.15);
 }
 
 .music-main {
     display: flex;
     align-items: center;
     gap: 14px;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
 }
 
 .music-btn {
-    width: 46px;
-    height: 46px;
+    width: 48px;
+    height: 48px;
     border: none;
     border-radius: 50%;
-    background: var(--accent);
-    color: #000;
+    background: linear-gradient(135deg, #ffffff, var(--accent));
+    color: #030305;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 16px;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px var(--accent-glow);
+    box-shadow: 0 0 15px var(--accent-glow);
     flex-shrink: 0;
 }
 
 .music-btn:hover {
     transform: scale(1.1);
-    box-shadow: 0 6px 20px rgba(181,140,255,0.6);
+    box-shadow: 0 0 25px var(--accent-bright);
 }
 
 .music-details {
@@ -319,32 +389,34 @@ html, body {
 .music-title {
     font-size: 14px;
     font-weight: 700;
+    color: #fff;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
 .music-artist {
-    color: var(--muted);
+    color: var(--text-muted);
     font-size: 12px;
     margin-top: 2px;
 }
 
-/* SÓNG NHẠC (WAVE) */
+/* SÓNG NHẠC */
 .music-wave {
     display: flex;
     align-items: flex-end;
     gap: 3px;
-    height: 16px;
+    height: 18px;
 }
 
 .wave-bar {
     width: 3px;
     height: 100%;
-    background: var(--accent);
+    background: var(--accent-bright);
     border-radius: 3px;
     animation: wave 1.2s ease-in-out infinite alternate;
     animation-play-state: paused;
+    box-shadow: 0 0 6px var(--accent);
 }
 
 .wave-bar:nth-child(2) { animation-delay: 0.2s; }
@@ -356,7 +428,7 @@ html, body {
 
 @keyframes wave {
     0% { height: 4px; }
-    100% { height: 16px; }
+    100% { height: 18px; }
 }
 
 /* THANH PROGRESS NHẠC */
@@ -368,13 +440,13 @@ html, body {
 
 .time-text {
     font-size: 11px;
-    color: var(--muted);
-    min-width: 30px;
+    color: var(--text-muted);
+    min-width: 32px;
 }
 
 .progress-bar {
     flex: 1;
-    height: 5px;
+    height: 6px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 10px;
     cursor: pointer;
@@ -385,45 +457,50 @@ html, body {
 .progress-fill {
     height: 100%;
     width: 0%;
-    background: var(--accent);
+    background: linear-gradient(90deg, var(--accent), #ffffff);
     border-radius: 10px;
+    box-shadow: 0 0 8px var(--accent);
     transition: width 0.1s linear;
 }
 
 /* FOOTER */
 .footer {
-    margin-top: 25px;
-    color: #555566;
+    margin-top: 28px;
+    color: #666677;
     font-size: 12px;
 }
 
-/* HIỆU ỨNG TIMING XUẤT HIỆN */
-.animate-item {
-    opacity: 0;
-    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+/* KEYFRAMES & ANIMATION */
+@keyframes textGlowPulse {
+    from { filter: drop-shadow(0 0 8px rgba(181, 140, 255, 0.4)); }
+    to { filter: drop-shadow(0 0 16px rgba(181, 140, 255, 0.8)); }
 }
 
-.delay-1 { animation-delay: 0.1s; }
-.delay-2 { animation-delay: 0.2s; }
-.delay-3 { animation-delay: 0.3s; }
-.delay-4 { animation-delay: 0.4s; }
-.delay-5 { animation-delay: 0.5s; }
+@keyframes rotateGlow {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
 
-@keyframes fadeInUp {
+@keyframes pulse {
+    0% { transform: scale(0.98); opacity: 0.8; }
+    100% { transform: scale(1.05); opacity: 1; }
+}
+
+@keyframes introCard {
     from {
         opacity: 0;
-        transform: translateY(24px);
+        transform: translateY(40px) scale(0.95);
     }
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
     }
 }
 
-/* RESPONSIVE MÀN HÌNH NHỎ */
+/* RESPONSIVE */
 @media (max-width: 480px) {
     .card {
-        padding: 30px 20px;
+        padding: 35px 20px;
     }
     .links {
         grid-template-columns: 1fr;
@@ -434,34 +511,39 @@ html, body {
 
 <body>
 
-<!-- CHỈNH SỬA TẠI ĐÂY: Thay link ảnh background ở phần CSS class .background phía trên -->
-<div class="background" id="bg"></div>
+<!-- OVERLAY KHI VÀO TRANG -->
+<div class="intro-overlay" id="introOverlay">
+    <div class="intro-logo">MINI DEV</div>
+</div>
+
+<div class="background"></div>
 <div class="particles" id="particles"></div>
 
 <div class="wrapper">
-    <main class="card">
+    <main class="card" id="tiltCard">
 
-        <!-- AKARI PROJECT FOUNDER BADGE -->
-        <div class="badge-container animate-item delay-1">
-            <span class="badge"><i class="fa-solid fa-crown"></i> Founder of Akari Project</span>
+        <!-- BADGES -->
+        <div class="badge-container">
+            <span class="badge"><i class="fa-solid fa-code"></i> Mini Dev</span>
+            <span class="badge"><i class="fa-solid fa-crown"></i> Akari Founder</span>
         </div>
 
         <!-- AVATAR -->
-        <div class="avatar-container animate-item delay-1">
+        <div class="avatar-container">
             <img class="avatar" src="https://storage.waifuwall.com/characters/000/000/480/480.webp" alt="Avatar">
         </div>
 
         <!-- NAME -->
-        <h1 class="name animate-item delay-2">Arzu<span class="username">Fuline</span></h1>
+        <h1 class="name">Arzu <span class="glow-text">Fuline</span></h1>
 
         <!-- BIO -->
-        <p class="bio animate-item delay-2">
-            Just another developer on the internet.<br>
-            Building <b>Kuriii Bot</b> & Leading <b>Akari Project</b>.
+        <p class="bio">
+            A passionate <b>Mini Dev</b> crafting digital experiences.<br>
+            Leading <b>Akari Project</b> & Developing <b>Kuriii Bot</b>.
         </p>
 
         <!-- SOCIAL LINKS -->
-        <div class="links animate-item delay-3">
+        <div class="links">
             <a class="link" href="https://discord.com/users/1046071845809573948" target="_blank"><i class="fa-brands fa-discord"></i> Discord</a>
             <a class="link" href="https://github.com/luong123465-eng" target="_blank"><i class="fa-brands fa-github"></i> GitHub</a>
             <a class="link" href="https://web.facebook.com/ng.neihh/" target="_blank"><i class="fa-brands fa-facebook"></i> Facebook</a>
@@ -469,17 +551,17 @@ html, body {
         </div>
 
         <!-- PROJECTS -->
-        <div class="section-title animate-item delay-4">Projects</div>
-        <div class="projects animate-item delay-4">
+        <div class="section-title">Projects</div>
+        <div class="projects">
             <div class="project">
                 <div class="project-info">
                     <div class="project-title">
                         Kuriii Bot
                         <span class="project-tag">Discord Bot</span>
                     </div>
-                    <div class="project-description">A multipurpose feature-rich Discord bot.</div>
+                    <div class="project-description">A feature-rich Discord bot developed by Mini Dev.</div>
                 </div>
-                <i class="fa-solid fa-robot" style="color: var(--accent);"></i>
+                <i class="fa-solid fa-robot" style="color: var(--accent-bright); font-size: 18px;"></i>
             </div>
             
             <div class="project">
@@ -488,20 +570,19 @@ html, body {
                         Akari Project
                         <span class="project-tag">Main Project</span>
                     </div>
-                    <div class="project-description">Founded and led by ArzuFuline.</div>
+                    <div class="project-description">Founded and led by Akari Founder.</div>
                 </div>
-                <i class="fa-solid fa-sparkles" style="color: var(--accent);"></i>
+                <i class="fa-solid fa-wand-magic-sparkles" style="color: var(--accent-bright); font-size: 18px;"></i>
             </div>
         </div>
 
         <!-- MUSIC PLAYER -->
-        <div class="music-player animate-item delay-5" id="musicPlayer">
+        <div class="music-player" id="musicPlayer">
             <div class="music-main">
                 <button class="music-btn" id="playBtn">
                     <i class="fa-solid fa-play" id="playIcon"></i>
                 </button>
                 <div class="music-details">
-                    <!-- BẠN CÓ THỂ ĐỔI TÊN BÀI HÁT TẠI ĐÂY -->
                     <div class="music-title">Favorite Track</div>
                     <div class="music-artist">Akari Soundtracks</div>
                 </div>
@@ -512,7 +593,6 @@ html, body {
                 </div>
             </div>
             
-            <!-- THANH THỜI GIAN VÀ TIẾN TRÌNH -->
             <div class="progress-container">
                 <span class="time-text" id="currentTime">0:00</span>
                 <div class="progress-bar" id="progressBar">
@@ -522,29 +602,44 @@ html, body {
             </div>
         </div>
 
-        <!-- FILE NHẠC TỰ ĐỘNG TẢI TỪ THƯ MỤC CÙNG TÊN: audio.mp3 -->
         <audio id="bgMusic" src="audio.mp3" preload="metadata"></audio>
 
         <!-- FOOTER -->
-        <div class="footer animate-item delay-5">
-            © 2026 ArzuFuline • Akari Project
+        <div class="footer">
+            © 2026 Mini Dev • Akari Founder
         </div>
     </main>
 </div>
 
 <script>
-    // Particle animation
+    // INTRO OVERLAY EFFECT
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            const overlay = document.getElementById('introOverlay');
+            overlay.classList.add('hidden');
+        }, 800);
+    });
+
+    // PARTICLES GENERATOR
     const container = document.getElementById('particles');
-    for (let i = 0; i < 25; i++) {
+    for (let i = 0; i < 35; i++) {
         const p = document.createElement('div');
         p.className = 'particle';
         p.style.left = Math.random() * 100 + 'vw';
-        p.style.animationDuration = (Math.random() * 4 + 4) + 's';
-        p.style.animationDelay = (Math.random() * 5) + 's';
+        p.style.animationDuration = (Math.random() * 5 + 3) + 's';
+        p.style.animationDelay = (Math.random() * 4) + 's';
         container.appendChild(p);
     }
 
-    // Advanced Music Player Script
+    // TILT CARD EFFECT ON MOUSEMOVE
+    const card = document.getElementById('tiltCard');
+    document.addEventListener('mousemove', (e) => {
+        const x = (window.innerWidth / 2 - e.clientX) / 35;
+        const y = (window.innerHeight / 2 - e.clientY) / 35;
+        card.style.transform = `rotateY(${-x}deg) rotateX(${y}deg)`;
+    });
+
+    // MUSIC PLAYER SCRIPT
     const audio = document.getElementById('bgMusic');
     const playBtn = document.getElementById('playBtn');
     const playIcon = document.getElementById('playIcon');
