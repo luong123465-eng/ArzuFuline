@@ -1,10 +1,12 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ArzuFuline - Profile</title>
+<!-- Font Awesome & Google Fonts -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 * {
@@ -15,46 +17,38 @@
 
 :root {
     --accent: #b58cff;
+    --accent-glow: rgba(181, 140, 255, 0.4);
     --text: #ffffff;
-    --muted: #aaa;
+    --muted: #a0a0ab;
+    --card-bg: rgba(13, 13, 18, 0.65);
+    --item-bg: rgba(255, 255, 255, 0.04);
+    --item-border: rgba(255, 255, 255, 0.08);
 }
 
 html, body {
     width: 100%;
     min-height: 100%;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     color: var(--text);
-    background: #08080c;
-}
-
-body {
+    background: #050508;
     overflow-x: hidden;
 }
 
-/* BACKGROUND */
+/* BACKGROUND (CÓ THỂ THAY BẰNG ẢNH HOẶC VIDEO) */
 .background {
     position: fixed;
     inset: 0;
     z-index: -5;
-    background:
-        linear-gradient(rgba(0,0,0,.48), rgba(0,0,0,.72)),
+    /* THAY LINK ẢNH NỀN Ở DƯỚI ĐÂY */
+    background: 
+        linear-gradient(to bottom, rgba(5, 5, 8, 0.5), rgba(5, 5, 8, 0.8)),
         url("https://picsum.photos/1920/1080") center/cover no-repeat;
-    filter: blur(0px);
-    transform: scale(1.03);
+    filter: blur(4px);
+    transform: scale(1.05);
+    transition: transform 0.5s ease-out;
 }
 
-.background::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(
-        circle at center,
-        transparent 0%,
-        rgba(0,0,0,.45) 100%
-    );
-}
-
-/* PARTICLES */
+/* HẠT BỤI MỜ (PARTICLES) */
 .particles {
     position: fixed;
     inset: 0;
@@ -68,225 +62,371 @@ body {
     height: 3px;
     background: var(--accent);
     border-radius: 50%;
-    opacity: .5;
+    opacity: 0.5;
+    box-shadow: 0 0 8px var(--accent);
     animation: float linear infinite;
 }
 
 @keyframes float {
     from {
-        transform: translateY(110vh);
+        transform: translateY(110vh) scale(0.8);
+        opacity: 0;
+    }
+    50% {
+        opacity: 0.6;
     }
     to {
-        transform: translateY(-10vh);
+        transform: translateY(-10vh) scale(1.2);
+        opacity: 0;
     }
 }
 
-/* MAIN CARD */
+/* MAIN WRAPPER */
 .wrapper {
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 30px 15px;
+    padding: 40px 15px;
 }
 
+/* CARD CHÍNH VỚI HIỆU ỨNG VÀO TRANG */
 .card {
-    width: min(560px, 100%);
-    padding: 35px 30px;
+    width: min(520px, 100%);
+    padding: 40px 30px;
     text-align: center;
-    background: rgba(15, 15, 20, .68);
-    border: 1px solid rgba(255,255,255,.09);
-    border-radius: 24px;
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
+    background: var(--card-bg);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 28px;
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
     box-shadow:
-        0 20px 80px rgba(0,0,0,.55),
-        0 0 50px rgba(181,140,255,.08);
-    animation: appear .8s ease;
+        0 30px 100px rgba(0,0,0,0.7),
+        0 0 60px rgba(181,140,255,0.1);
+    animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-@keyframes appear {
-    from {
-        opacity: 0;
-        transform: translateY(20px) scale(.97);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
+/* BADGE FOUNDER AKARI */
+.badge-container {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    background: rgba(181, 140, 255, 0.12);
+    border: 1px solid rgba(181, 140, 255, 0.3);
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 0.5px;
 }
 
 /* AVATAR */
+.avatar-container {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 20px;
+}
+
 .avatar {
-    width: 115px;
-    height: 115px;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     border-radius: 50%;
-    border: 3px solid rgba(255,255,255,.85);
-    box-shadow: 0 0 25px rgba(181,140,255,.45);
-    margin-bottom: 18px;
-    transition: .3s ease;
+    border: 3px solid rgba(255,255,255,0.8);
+    box-shadow: 0 0 30px var(--accent-glow);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .avatar:hover {
-    transform: scale(1.06);
-    box-shadow: 0 0 40px rgba(181,140,255,.75);
+    transform: scale(1.08) rotate(3deg);
+    box-shadow: 0 0 50px rgba(181,140,255,0.8);
 }
 
 /* NAME & BIO */
 .name {
     font-size: 32px;
-    font-weight: 700;
-    letter-spacing: .5px;
-    margin-bottom: 8px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 6px;
 }
 
 .username {
     color: var(--accent);
+    background: linear-gradient(135deg, #fff, var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .bio {
     color: var(--muted);
-    font-size: 15px;
+    font-size: 14px;
     line-height: 1.6;
     margin: 0 auto 25px;
-    max-width: 430px;
+    max-width: 400px;
 }
 
 /* LINKS */
 .links {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    margin-bottom: 25px;
+    gap: 12px;
+    margin-bottom: 30px;
 }
 
 .link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
     text-decoration: none;
     color: white;
-    padding: 13px 15px;
-    border-radius: 13px;
-    background: rgba(255,255,255,.06);
-    border: 1px solid rgba(255,255,255,.07);
-    transition: .25s ease;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 12px 16px;
+    border-radius: 14px;
+    background: var(--item-bg);
+    border: 1px solid var(--item-border);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .link:hover {
     background: var(--accent);
-    color: #fff;
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(181,140,255,.25);
+    color: #000;
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px var(--accent-glow);
+    border-color: var(--accent);
+}
+
+/* SECTIONS */
+.section-title {
+    text-align: left;
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 12px;
 }
 
 /* PROJECTS */
-.section-title {
-    text-align: left;
-    color: #ddd;
-    font-size: 13px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 10px;
-}
-
 .projects {
     display: grid;
-    gap: 10px;
-    margin-bottom: 25px;
+    gap: 12px;
+    margin-bottom: 30px;
 }
 
 .project {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     text-align: left;
-    padding: 15px;
-    border-radius: 14px;
-    background: rgba(255,255,255,.045);
-    border: 1px solid rgba(255,255,255,.06);
-    transition: .25s ease;
+    padding: 16px;
+    border-radius: 16px;
+    background: var(--item-bg);
+    border: 1px solid var(--item-border);
+    transition: all 0.3s ease;
 }
 
 .project:hover {
-    transform: translateX(4px);
-    border-color: rgba(181,140,255,.35);
+    transform: translateY(-2px) translateX(4px);
+    border-color: rgba(181,140,255,0.4);
+    background: rgba(255, 255, 255, 0.07);
+}
+
+.project-info {
+    flex: 1;
 }
 
 .project-title {
-    font-weight: 600;
-    margin-bottom: 5px;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .project-description {
-    color: #999;
+    color: var(--muted);
     font-size: 13px;
 }
 
-/* MUSIC */
-.music {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px;
-    background: rgba(255,255,255,.045);
-    border-radius: 14px;
+.project-tag {
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.1);
+    color: #fff;
 }
 
-.music-button {
-    width: 42px;
-    height: 42px;
+/* MUSIC PLAYER ĐẸP HƠN */
+.music-player {
+    background: var(--item-bg);
+    border: 1px solid var(--item-border);
+    border-radius: 18px;
+    padding: 16px;
+    transition: border-color 0.3s;
+}
+
+.music-player:hover {
+    border-color: rgba(181, 140, 255, 0.3);
+}
+
+.music-main {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 12px;
+}
+
+.music-btn {
+    width: 46px;
+    height: 46px;
     border: none;
     border-radius: 50%;
     background: var(--accent);
-    color: white;
+    color: #000;
     cursor: pointer;
-    transition: .2s;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 16px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px var(--accent-glow);
+    flex-shrink: 0;
 }
 
-.music-button:hover {
-    transform: scale(1.08);
+.music-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(181,140,255,0.6);
 }
 
-.music-info {
+.music-details {
     text-align: left;
     flex: 1;
+    overflow: hidden;
 }
 
 .music-title {
     font-size: 14px;
-    font-weight: bold;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.music-status {
-    color: #888;
+.music-artist {
+    color: var(--muted);
     font-size: 12px;
-    margin-top: 3px;
+    margin-top: 2px;
+}
+
+/* SÓNG NHẠC (WAVE) */
+.music-wave {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    height: 16px;
+}
+
+.wave-bar {
+    width: 3px;
+    height: 100%;
+    background: var(--accent);
+    border-radius: 3px;
+    animation: wave 1.2s ease-in-out infinite alternate;
+    animation-play-state: paused;
+}
+
+.wave-bar:nth-child(2) { animation-delay: 0.2s; }
+.wave-bar:nth-child(3) { animation-delay: 0.4s; }
+
+.playing .wave-bar {
+    animation-play-state: running;
+}
+
+@keyframes wave {
+    0% { height: 4px; }
+    100% { height: 16px; }
+}
+
+/* THANH PROGRESS NHẠC */
+.progress-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.time-text {
+    font-size: 11px;
+    color: var(--muted);
+    min-width: 30px;
+}
+
+.progress-bar {
+    flex: 1;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--accent);
+    border-radius: 10px;
+    transition: width 0.1s linear;
 }
 
 /* FOOTER */
 .footer {
-    margin-top: 22px;
-    color: #666;
-    font-size: 11px;
+    margin-top: 25px;
+    color: #555566;
+    font-size: 12px;
 }
 
-@media (max-width: 500px) {
+/* HIỆU ỨNG TIMING XUẤT HIỆN */
+.animate-item {
+    opacity: 0;
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+.delay-5 { animation-delay: 0.5s; }
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* RESPONSIVE MÀN HÌNH NHỎ */
+@media (max-width: 480px) {
     .card {
-        padding: 28px 20px;
-        border-radius: 20px;
+        padding: 30px 20px;
     }
-
-    .name {
-        font-size: 27px;
-    }
-
     .links {
         grid-template-columns: 1fr;
-    }
-
-    .avatar {
-        width: 100px;
-        height: 100px;
     }
 }
 </style>
@@ -294,57 +434,100 @@ body {
 
 <body>
 
-<div class="background"></div>
+<!-- CHỈNH SỬA TẠI ĐÂY: Bạn có thể thay link ảnh background ở phần CSS class .background phía trên -->
+<div class="background" id="bg"></div>
 <div class="particles" id="particles"></div>
 
 <div class="wrapper">
     <main class="card">
-        <!-- AVATAR -->
-        <img class="avatar" src="https://api.dicebear.com/7.x/bottts/svg?seed=ArzuFuline" alt="Avatar">
+
+        <!-- AKARI PROJECT FOUNDER BADGE -->
+        <div class="badge-container animate-item delay-1">
+            <span class="badge"><i class="fa-solid fa-crown"></i> Founder of Akari Project</span>
+        </div>
+
+        <!-- AVATAR - CHỈNH SỬA LINK ẢNH DƯỚI ĐÂY -->
+        <div class="avatar-container animate-item delay-1">
+            <img class="avatar" src="https://api.dicebear.com/7.x/bottts/svg?seed=ArzuFuline" alt="Avatar">
+        </div>
 
         <!-- NAME -->
-        <h1 class="name">Arzu<span class="username">Fuline</span></h1>
+        <h1 class="name animate-item delay-2">Arzu<span class="username">Fuline</span></h1>
 
         <!-- BIO -->
-        <p class="bio">
-            Just another person on the internet.<br>
-            I like games, music and programming.
+        <p class="bio animate-item delay-2">
+            Just another developer on the internet.<br>
+            Building <b>Kuriii Bot</b> & Leading <b>Akari Project</b>.
         </p>
 
         <!-- SOCIAL LINKS -->
-        <div class="links">
-            <a class="link" href="https://discord.com/" target="_blank">Discord</a>
-            <a class="link" href="https://github.com/luong123465-eng" target="_blank">GitHub</a>
-            <a class="link" href="#" target="_blank">YouTube</a>
-            <a class="link" href="#" target="_blank">Other</a>
+        <div class="links animate-item delay-3">
+            <a class="link" href="https://discord.com/" target="_blank"><i class="fa-brands fa-discord"></i> Discord</a>
+            <a class="link" href="https://github.com/luong123465-eng" target="_blank"><i class="fa-brands fa-github"></i> GitHub</a>
+            <a class="link" href="#" target="_blank"><i class="fa-brands fa-youtube"></i> YouTube</a>
+            <a class="link" href="#" target="_blank"><i class="fa-solid fa-globe"></i> Website</a>
         </div>
 
         <!-- PROJECTS -->
-        <div class="section-title">Projects</div>
-        <div class="projects">
+        <div class="section-title animate-item delay-4">Projects</div>
+        <div class="projects animate-item delay-4">
             <div class="project">
-                <div class="project-title">Kuriii</div>
-                <div class="project-description">My Discord bot project.</div>
+                <div class="project-info">
+                    <div class="project-title">
+                        Kuriii Bot
+                        <span class="project-tag">Discord Bot</span>
+                    </div>
+                    <div class="project-description">A multipurpose feature-rich Discord bot.</div>
+                </div>
+                <i class="fa-solid fa-robot" style="color: var(--accent);"></i>
             </div>
+            
             <div class="project">
-                <div class="project-title">Project Two</div>
-                <div class="project-description">Something I'm currently working on.</div>
+                <div class="project-info">
+                    <div class="project-title">
+                        Akari Project
+                        <span class="project-tag">Main Project</span>
+                    </div>
+                    <div class="project-description">Founded and led by ArzuFuline.</div>
+                </div>
+                <i class="fa-solid fa-sparkles" style="color: var(--accent);"></i>
             </div>
         </div>
 
-        <!-- MUSIC PLAYER -->
-        <div class="music">
-            <button class="music-button" id="playBtn">▶</button>
-            <div class="music-info">
-                <div class="music-title">My Favorite Track</div>
-                <div class="music-status" id="musicStatus">Paused</div>
+        <!-- MUSIC PLAYER ĐẸP HƠN -->
+        <div class="music-player animate-item delay-5" id="musicPlayer">
+            <div class="music-main">
+                <button class="music-btn" id="playBtn">
+                    <i class="fa-solid fa-play" id="playIcon"></i>
+                </button>
+                <div class="music-details">
+                    <!-- CHỈNH TÊN BÀI HÁT TẠI ĐÂY -->
+                    <div class="music-title">Favorite Track</div>
+                    <div class="music-artist">Akari Soundtracks</div>
+                </div>
+                <div class="music-wave" id="musicWave">
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                </div>
+            </div>
+            
+            <!-- THANH THỜI GIAN VÀ TIẾN TRÌNH -->
+            <div class="progress-container">
+                <span class="time-text" id="currentTime">0:00</span>
+                <div class="progress-bar" id="progressBar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <span class="time-text" id="duration">0:00</span>
             </div>
         </div>
-        <audio id="bgMusic" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
+
+        <!-- AUDIO SOURCE - CHỈNH LINK BÀI HÁT TẠI ĐÂY -->
+        <audio id="bgMusic" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" preload="metadata"></audio>
 
         <!-- FOOTER -->
-        <div class="footer">
-            © 2026 ArzuFuline. All rights reserved.
+        <div class="footer animate-item delay-5">
+            © 2026 ArzuFuline • Akari Project
         </div>
     </main>
 </div>
@@ -352,30 +535,65 @@ body {
 <script>
     // Particle animation
     const container = document.getElementById('particles');
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < 25; i++) {
         const p = document.createElement('div');
         p.className = 'particle';
         p.style.left = Math.random() * 100 + 'vw';
-        p.style.animationDuration = (Math.random() * 3 + 4) + 's';
+        p.style.animationDuration = (Math.random() * 4 + 4) + 's';
         p.style.animationDelay = (Math.random() * 5) + 's';
         container.appendChild(p);
     }
 
-    // Music control
+    // Advanced Music Player Script
     const audio = document.getElementById('bgMusic');
     const playBtn = document.getElementById('playBtn');
-    const status = document.getElementById('musicStatus');
+    const playIcon = document.getElementById('playIcon');
+    const player = document.getElementById('musicPlayer');
+    const progressFill = document.getElementById('progressFill');
+    const progressBar = document.getElementById('progressBar');
+    const currentTimeEl = document.getElementById('currentTime');
+    const durationEl = document.getElementById('duration');
+
+    function formatTime(seconds) {
+        if (isNaN(seconds)) return "0:00";
+        const mins = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60);
+        return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+    }
 
     playBtn.addEventListener('click', () => {
         if (audio.paused) {
             audio.play();
-            playBtn.textContent = '❚❚';
-            status.textContent = 'Now Playing...';
+            playIcon.className = 'fa-solid fa-pause';
+            player.classList.add('playing');
         } else {
             audio.pause();
-            playBtn.textContent = '▶';
-            status.textContent = 'Paused';
+            playIcon.className = 'fa-solid fa-play';
+            player.classList.remove('playing');
         }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+        durationEl.textContent = formatTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+        const percent = (audio.currentTime / audio.duration) * 100;
+        progressFill.style.width = percent + '%';
+        currentTimeEl.textContent = formatTime(audio.currentTime);
+    });
+
+    progressBar.addEventListener('click', (e) => {
+        const rect = progressBar.getBoundingClientRect();
+        const clickX = e.clientX - rect.left;
+        const width = rect.width;
+        audio.currentTime = (clickX / width) * audio.duration;
+    });
+
+    audio.addEventListener('ended', () => {
+        playIcon.className = 'fa-solid fa-play';
+        player.classList.remove('playing');
+        progressFill.style.width = '0%';
     });
 </script>
 
