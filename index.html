@@ -207,6 +207,16 @@ a{color:inherit}
 .float{animation:float 5s ease-in-out infinite}
 @keyframes float{50%{transform:translateY(-8px)}}
 
+
+/* MUSIC CONTROL */
+.music-control{
+ position:fixed;right:18px;bottom:18px;z-index:200;
+ border:2px solid var(--white);background:rgba(8,6,15,.88);color:white;
+ padding:10px 14px;cursor:pointer;font:700 10px 'JetBrains Mono';
+ box-shadow:4px 4px 0 var(--pink);transition:.2s;
+}
+.music-control:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--purple)}
+
 @media(max-width:800px){
  .nav-links{display:none}
  .hero{grid-template-columns:1fr;padding-top:125px}
@@ -225,6 +235,8 @@ a{color:inherit}
 </style>
 </head>
 <body>
+<audio id="bgMusic" src="audio.mp3" loop preload="auto"></audio>
+<button class="music-control" id="musicBtn" type="button">♪ MUSIC: OFF</button>
 
 <div id="intro">
  <div class="intro-inner">
@@ -340,7 +352,7 @@ a{color:inherit}
    <div>
     <div class="osu-label">RHYTHM / AIM / READING</div>
     <h3>ARZUFULINE × osu!</h3>
-    <p>A separate corner for the rhythm-game side of the profile. Replace the button link below with your actual osu! profile URL.</p>
+    <p>A separate corner for the rhythm-game side of the profile.</p>
     <div class="osu-stats">
      <div class="stat"><b>~340K</b><span>GLOBAL RANK</span></div>
      <div class="stat"><b>200pp</b><span>TOP PLAY GOAL</span></div>
@@ -357,7 +369,9 @@ a{color:inherit}
    <p>Want to talk about a project, bot, web idea or just say hi?</p>
    <div class="hero-actions" style="justify-content:center;margin-top:0">
     <a class="btn primary" href="https://discord.com/users/1046071845809573948" target="_blank">DISCORD ↗</a>
-    <a class="btn secondary" href="https://github.com/luong123465-eng" target="_blank">GITHUB ↗</a>
+    <a class="btn secondary" href="https://github.com/luong123465-eng" target="_blank" rel="noopener">GITHUB ↗</a>
+     <a class="btn primary" href="https://web.facebook.com/ng.neihh/" target="_blank" rel="noopener">FACEBOOK ↗</a>
+     <a class="btn secondary" href="mailto:arzufuline.business@gmail.com">EMAIL ↗</a>
    </div>
   </div>
  </section>
@@ -386,6 +400,29 @@ document.addEventListener('mousemove',e=>{
  const y=(window.innerHeight/2-e.clientY)/90;
  frame.style.transform=`rotateY(${-x}deg) rotateX(${y}deg) rotate(2deg)`;
 });
+
+const music=document.getElementById('bgMusic');
+const musicBtn=document.getElementById('musicBtn');
+
+function updateMusicButton(){
+ musicBtn.textContent=music.paused?'♪ MUSIC: OFF':'♪ MUSIC: ON';
+}
+
+musicBtn.addEventListener('click',()=>{
+ if(music.paused){
+  music.play().then(updateMusicButton).catch(updateMusicButton);
+ }else{
+  music.pause();
+  updateMusicButton();
+ }
+});
+
+window.addEventListener('load',()=>{
+ music.play().then(updateMusicButton).catch(()=>{
+  updateMusicButton();
+ });
+});
+
 </script>
 </body>
 </html>
