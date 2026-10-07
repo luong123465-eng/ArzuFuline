@@ -3,694 +3,389 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mini Dev - Profile</title>
-<!-- Font Awesome & Google Fonts -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
+<title>ArzuFuline — Akari Founder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+ --bg:#08060f;--bg2:#0d0a18;--panel:#110d1d;--white:#fff;
+ --purple:#9b5cff;--purple2:#d5b8ff;--pink:#ff3cac;--muted:#9d97ad;
+ --line:rgba(255,255,255,.88);--soft:rgba(255,255,255,.09);
 }
-
-:root {
-    --accent: #b58cff;
-    --accent-bright: #d4bfff;
-    --accent-glow: rgba(181, 140, 255, 0.6);
-    --bg-dark: #030305;
-    --card-bg: rgba(12, 10, 18, 0.7);
-    --text-light: #ffffff;
-    --text-muted: #a1a1aa;
-    --item-bg: rgba(255, 255, 255, 0.03);
-    --item-border: rgba(181, 140, 255, 0.15);
+html{scroll-behavior:smooth}
+body{
+ min-height:100vh;background:var(--bg);color:var(--white);
+ font-family:'JetBrains Mono',monospace;overflow-x:hidden;
 }
-
-html, body {
-    width: 100%;
-    min-height: 100vh;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    color: var(--text-light);
-    background: var(--bg-dark);
-    overflow-x: hidden;
+body:before{
+ content:"";position:fixed;inset:0;z-index:-4;
+ background:
+ radial-gradient(circle at 15% 15%,rgba(155,92,255,.18),transparent 30%),
+ radial-gradient(circle at 85% 35%,rgba(255,60,172,.11),transparent 28%),
+ linear-gradient(135deg,#07050c,#0d0818 50%,#06050b);
 }
-
-/* HIỆU ỨNG INTRO KHI VÀO TRANG */
-.intro-overlay {
-    position: fixed;
-    inset: 0;
-    background: #030305;
-    z-index: 9999;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    transition: opacity 0.8s ease, visibility 0.8s;
+body:after{
+ content:"";position:fixed;inset:0;z-index:-3;pointer-events:none;opacity:.16;
+ background-image:linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),
+ linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);
+ background-size:42px 42px;
+ mask-image:linear-gradient(to bottom,black,transparent 85%);
 }
+::selection{background:var(--pink);color:#fff}
+a{color:inherit}
 
-.intro-overlay.hidden {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
+#intro{
+ position:fixed;inset:0;background:#07050b;z-index:9999;
+ display:flex;align-items:center;justify-content:center;
+ transition:opacity .9s ease,visibility .9s ease;
 }
-
-.intro-logo {
-    font-size: 48px;
-    font-weight: 800;
-    color: #fff;
-    text-shadow: 0 0 20px var(--accent-glow), 0 0 40px var(--accent);
-    animation: pulse 1.5s infinite alternate;
+#intro.hide{opacity:0;visibility:hidden;pointer-events:none}
+.intro-inner{text-align:center;position:relative}
+.intro-kicker{font-size:11px;letter-spacing:5px;color:var(--purple2);margin-bottom:18px}
+.intro-name{
+ font-family:'Space Mono',monospace;font-size:clamp(42px,9vw,100px);font-weight:700;
+ letter-spacing:-5px;text-shadow:0 0 12px var(--purple),0 0 38px rgba(155,92,255,.65);
+ animation:introPulse 1.4s ease-in-out infinite alternate;
 }
+.intro-line{width:0;height:2px;margin:22px auto 0;background:var(--white);animation:lineIn 1.1s .2s forwards}
+@keyframes introPulse{from{transform:scale(.98);opacity:.78}to{transform:scale(1.02);opacity:1}}
+@keyframes lineIn{to{width:180px}}
 
-/* BACKGROUND VÀ PARTICLE */
-.background {
-    position: fixed;
-    inset: 0;
-    z-index: -5;
-    background: 
-        radial-gradient(circle at 50% 20%, rgba(181, 140, 255, 0.15), transparent 70%),
-        radial-gradient(circle at 80% 80%, rgba(138, 43, 226, 0.1), transparent 50%),
-        linear-gradient(to bottom, rgba(3, 3, 5, 0.8), rgba(3, 3, 5, 0.95)),
-        url("https://picsum.photos/1920/1080") center/cover no-repeat;
-    filter: blur(8px);
-    transform: scale(1.05);
+.nav{
+ position:fixed;top:18px;left:50%;transform:translateX(-50%);z-index:100;
+ width:min(1120px,calc(100% - 28px));height:62px;
+ border:2px solid var(--line);background:rgba(8,6,15,.78);backdrop-filter:blur(18px);
+ display:flex;align-items:center;justify-content:space-between;padding:0 16px;
+ box-shadow:6px 6px 0 rgba(155,92,255,.28);
 }
-
-.particles {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: -1;
+.logo{font-weight:800;letter-spacing:-1px;font-size:19px}
+.logo b{color:var(--purple2);text-shadow:0 0 12px var(--purple)}
+.nav-links{display:flex;gap:6px}
+.nav-links a{
+ text-decoration:none;font-size:11px;font-weight:700;padding:10px 12px;
+ border:1px solid transparent;transition:.25s;
 }
-
-.particle {
-    position: absolute;
-    width: 2px;
-    height: 2px;
-    background: #fff;
-    border-radius: 50%;
-    box-shadow: 0 0 10px var(--accent-bright), 0 0 20px var(--accent);
-    animation: floatParticle linear infinite;
+.nav-links a:hover{border-color:var(--white);background:var(--purple);box-shadow:3px 3px 0 var(--pink)}
+.nav-btn{
+ border:2px solid var(--white);background:var(--purple);color:white;
+ width:34px;height:34px;cursor:pointer;font:700 15px 'JetBrains Mono';
+ box-shadow:3px 3px 0 var(--pink);transition:.2s;
 }
+.nav-btn:hover{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--pink)}
 
-@keyframes floatParticle {
-    from {
-        transform: translateY(105vh) scale(0.5);
-        opacity: 0;
-    }
-    50% {
-        opacity: 0.8;
-    }
-    to {
-        transform: translateY(-5vh) scale(1.2);
-        opacity: 0;
-    }
+.wrap{width:min(1120px,calc(100% - 28px));margin:auto}
+.hero{min-height:100vh;display:grid;grid-template-columns:1.15fr .85fr;gap:50px;align-items:center;padding:125px 0 70px}
+.eyebrow{font-size:11px;letter-spacing:3px;color:var(--purple2);margin-bottom:18px}
+.hero h1{font-family:'Space Mono',monospace;font-size:clamp(48px,7vw,92px);line-height:.92;letter-spacing:-6px}
+.hero h1 .purple{color:var(--purple2);text-shadow:0 0 14px var(--purple),0 0 35px rgba(155,92,255,.5)}
+.hero-sub{margin-top:25px;max-width:620px;color:#b4afc1;font-size:14px;line-height:1.9}
+.hero-sub strong{color:white}
+.signature{
+ position:relative;display:inline-block;margin-top:24px;font-family:'Space Mono',monospace;
+ font-size:15px;color:white;font-style:italic;transform:rotate(-5deg);
+ text-shadow:0 0 12px var(--pink);
 }
-
-/* MAIN WRAPPER */
-.wrapper {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 40px 20px;
-    perspective: 1000px;
+.signature:after{
+ content:"";position:absolute;left:-8%;right:-10%;bottom:-9px;height:2px;
+ background:linear-gradient(90deg,transparent,var(--pink),var(--purple2),transparent);
+ transform:rotate(-2deg);box-shadow:0 0 10px var(--pink);
 }
-
-/* CARD CHÍNH KÈM HIỆU ỨNG GLOW & BORDER GRADIENT */
-.card {
-    position: relative;
-    width: min(520px, 100%);
-    padding: 45px 32px;
-    text-align: center;
-    background: var(--card-bg);
-    border: 1px solid var(--item-border);
-    border-radius: 28px;
-    backdrop-filter: blur(28px);
-    -webkit-backdrop-filter: blur(28px);
-    box-shadow:
-        0 20px 50px rgba(0, 0, 0, 0.8),
-        0 0 40px rgba(181, 140, 255, 0.15),
-        inset 0 0 15px rgba(255, 255, 255, 0.03);
-    transition: transform 0.2s ease-out, box-shadow 0.3s ease;
-    animation: introCard 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+.signature:before{
+ content:"";position:absolute;left:20%;width:85px;bottom:-15px;height:1px;
+ background:var(--white);transform:rotate(-11deg);
 }
-
-.card:hover {
-    box-shadow:
-        0 25px 60px rgba(0, 0, 0, 0.9),
-        0 0 50px rgba(181, 140, 255, 0.25),
-        inset 0 0 20px rgba(255, 255, 255, 0.05);
+.hero-actions{display:flex;gap:12px;margin-top:32px;flex-wrap:wrap}
+.btn{
+ display:inline-flex;align-items:center;justify-content:center;text-decoration:none;
+ padding:13px 18px;border:2px solid var(--white);font-size:11px;font-weight:800;
+ transition:.22s;box-shadow:5px 5px 0 var(--purple);
 }
+.btn.primary{background:var(--white);color:#09070e}
+.btn.secondary{background:transparent;color:white;box-shadow:5px 5px 0 var(--pink)}
+.btn:hover{transform:translate(3px,3px);box-shadow:2px 2px 0 var(--purple)}
 
-/* BADGES */
-.badge-container {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
+.avatar-stage{display:flex;justify-content:center;perspective:900px}
+.avatar-frame{
+ width:min(360px,75vw);aspect-ratio:1;border:3px solid var(--white);
+ padding:10px;background:var(--panel);position:relative;
+ transform:rotate(3deg);box-shadow:14px 14px 0 var(--purple),-10px -10px 0 rgba(255,60,172,.28);
+ transition:.5s;overflow:hidden;
 }
-
-.badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 16px;
-    background: rgba(181, 140, 255, 0.1);
-    border: 1px solid rgba(181, 140, 255, 0.3);
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--accent-bright);
-    letter-spacing: 0.5px;
-    text-shadow: 0 0 8px var(--accent-glow);
-    box-shadow: 0 0 15px rgba(181, 140, 255, 0.1);
+.avatar-frame:before{
+ content:"ARZU // FOUNDER";position:absolute;top:16px;left:16px;z-index:2;
+ background:#09070e;border:1px solid white;padding:6px 8px;font-size:9px;letter-spacing:2px;
 }
-
-/* AVATAR KÈM KHUNG GLOW */
-.avatar-container {
-    position: relative;
-    width: 125px;
-    height: 125px;
-    margin: 0 auto 22px;
+.avatar-frame:after{
+ content:"";position:absolute;inset:0;pointer-events:none;
+ background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.18) 50%,transparent 70%);
+ transform:translateX(-120%);transition:.7s;
 }
+.avatar-frame:hover{transform:rotateY(12deg) rotateX(-7deg) rotate(1deg) scale(1.03);box-shadow:18px 18px 0 var(--pink),-10px -10px 0 var(--purple)}
+.avatar-frame:hover:after{transform:translateX(120%)}
+.avatar-frame img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(1.08) contrast(1.05)}
+.corner{position:absolute;width:18px;height:18px;border-color:white;border-style:solid;z-index:3}
+.c1{left:-3px;top:-3px;border-width:3px 0 0 3px}.c2{right:-3px;top:-3px;border-width:3px 3px 0 0}
+.c3{left:-3px;bottom:-3px;border-width:0 0 3px 3px}.c4{right:-3px;bottom:-3px;border-width:0 3px 3px 0}
 
-.avatar-container::before {
-    content: '';
-    position: absolute;
-    inset: -4px;
-    border-radius: 50%;
-    background: linear-gradient(45deg, var(--accent), #ffffff, var(--accent));
-    z-index: -1;
-    filter: blur(8px);
-    opacity: 0.7;
-    animation: rotateGlow 4s linear infinite;
+.section{padding:85px 0;position:relative}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:28px}
+.section-title{
+ font-family:'Space Mono',monospace;font-size:clamp(25px,4vw,42px);letter-spacing:-2px;
+ position:relative;display:inline-block
 }
-
-.avatar {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 50%;
-    border: 2px solid rgba(255, 255, 255, 0.9);
-    transition: transform 0.4s ease;
+.section-title:after{
+ content:"";position:absolute;left:0;bottom:-7px;width:62%;height:4px;
+ background:linear-gradient(90deg,var(--pink),var(--purple),transparent);box-shadow:0 0 10px var(--pink);
 }
+.section-index{font-size:10px;color:#676174;letter-spacing:3px}
 
-.avatar:hover {
-    transform: scale(1.05) rotate(4deg);
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.card{
+ background:rgba(16,12,27,.88);border:2px solid var(--line);padding:24px;
+ position:relative;transition:.25s;box-shadow:7px 7px 0 rgba(155,92,255,.32);
 }
-
-/* CHỮ NỔI BẬT & HIỆU ỨNG GLOW */
-.name {
-    font-size: 34px;
-    font-weight: 800;
-    letter-spacing: -0.5px;
-    margin-bottom: 8px;
-    color: #ffffff;
-    text-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+.card:before{
+ content:"";position:absolute;top:0;right:0;width:24px;height:24px;
+ border-left:2px solid white;border-bottom:2px solid white;opacity:.8;
 }
-
-.glow-text {
-    background: linear-gradient(135deg, #ffffff 0%, var(--accent-bright) 50%, var(--accent) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 10px var(--accent-glow));
-    animation: textGlowPulse 3s ease-in-out infinite alternate;
+.card:hover{transform:translate(-3px,-3px);box-shadow:12px 12px 0 var(--pink)}
+.project-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.project-num{font-size:10px;color:var(--purple2);letter-spacing:2px}
+.project-icon{font-size:22px;color:var(--purple2);text-shadow:0 0 15px var(--purple)}
+.card h3{font-size:20px;margin-bottom:10px}
+.card p{color:var(--muted);font-size:12px;line-height:1.8}
+.tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:18px}
+.tag,.skill{
+ border:1px solid rgba(255,255,255,.7);padding:6px 9px;font-size:9px;
+ background:rgba(155,92,255,.12);color:#ddd0ff;transition:.2s;
 }
+.tag:hover,.skill:hover{background:var(--purple);color:white;box-shadow:0 0 12px rgba(155,92,255,.6)}
 
-.bio {
-    color: var(--text-muted);
-    font-size: 14px;
-    line-height: 1.6;
-    margin: 0 auto 28px;
-    max-width: 420px;
+.timeline{position:relative;margin-left:12px}
+.timeline:before{content:"";position:absolute;left:5px;top:5px;bottom:5px;width:2px;background:linear-gradient(var(--purple),var(--pink),transparent)}
+.time-item{position:relative;padding:0 0 35px 34px}
+.time-item:last-child{padding-bottom:0}
+.dot{position:absolute;left:-1px;top:2px;width:14px;height:14px;border:2px solid white;background:var(--purple);box-shadow:0 0 14px var(--purple)}
+.time{font-size:10px;color:var(--pink);letter-spacing:2px;margin-bottom:8px}
+.time-item h3{font-size:17px;margin-bottom:7px}
+.time-item p{font-size:12px;color:var(--muted);line-height:1.8;max-width:760px}
+
+.skills{display:flex;flex-wrap:wrap;gap:10px}
+.skill{font-size:11px;padding:10px 13px;border-width:2px;color:white;box-shadow:3px 3px 0 rgba(155,92,255,.35)}
+.skill.python{background:rgba(155,92,255,.22);text-shadow:0 0 8px var(--purple2)}
+.skill.ruby{background:rgba(255,60,172,.13)}
+
+.osu{
+ display:grid;grid-template-columns:1fr auto;align-items:center;gap:25px;
+ background:linear-gradient(135deg,rgba(155,92,255,.15),rgba(255,60,172,.07));
+ border:3px solid white;padding:28px;box-shadow:10px 10px 0 var(--pink);position:relative;overflow:hidden;
 }
-
-.bio b {
-    color: #fff;
-    text-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+.osu:after{
+ content:"osu!";position:absolute;right:-12px;bottom:-36px;font-size:120px;font-weight:800;
+ color:rgba(255,255,255,.035);font-style:italic;pointer-events:none;
 }
+.osu-label{font-size:10px;letter-spacing:3px;color:var(--pink);margin-bottom:8px}
+.osu h3{font-size:26px;margin-bottom:8px}
+.osu p{font-size:12px;color:var(--muted);line-height:1.7;max-width:650px}
+.osu-stats{display:flex;gap:10px;flex-wrap:wrap;margin-top:17px}
+.stat{border:1px solid rgba(255,255,255,.55);padding:9px 12px;background:rgba(0,0,0,.25)}
+.stat b{display:block;font-size:14px;color:white}.stat span{font-size:8px;color:#81798e}
+.osu-button{z-index:1;white-space:nowrap}
 
-/* LINKS SOCIAL */
-.links {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    margin-bottom: 30px;
+.contact{
+ border:3px solid white;padding:35px;text-align:center;position:relative;
+ background:rgba(17,13,29,.85);box-shadow:10px 10px 0 var(--purple);
 }
+.contact h2{font-family:'Space Mono';font-size:clamp(28px,5vw,48px);letter-spacing:-3px}
+.contact p{color:var(--muted);font-size:12px;margin:14px auto 24px;max-width:600px;line-height:1.8}
+.footer{padding:35px 0 50px;text-align:center;color:#625d6c;font-size:9px;letter-spacing:2px}
 
-.link {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    text-decoration: none;
-    color: var(--text-light);
-    font-weight: 600;
-    font-size: 14px;
-    padding: 12px 18px;
-    border-radius: 14px;
-    background: var(--item-bg);
-    border: 1px solid var(--item-border);
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.reveal.show{opacity:1;transform:none}
+.float{animation:float 5s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-8px)}}
+
+@media(max-width:800px){
+ .nav-links{display:none}
+ .hero{grid-template-columns:1fr;padding-top:125px}
+ .avatar-stage{order:-1}
+ .avatar-frame{width:min(310px,78vw)}
+ .grid{grid-template-columns:1fr}
+ .osu{grid-template-columns:1fr}
+ .section{padding:65px 0}
 }
-
-.link:hover {
-    background: rgba(181, 140, 255, 0.15);
-    border-color: var(--accent);
-    color: #ffffff;
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(181, 140, 255, 0.25);
-}
-
-.link i {
-    color: var(--accent-bright);
-    transition: transform 0.3s;
-}
-
-.link:hover i {
-    transform: scale(1.2);
-}
-
-/* SECTIONS */
-.section-title {
-    text-align: left;
-    color: var(--text-muted);
-    font-size: 12px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    margin-bottom: 14px;
-}
-
-/* PROJECTS */
-.projects {
-    display: grid;
-    gap: 12px;
-    margin-bottom: 30px;
-}
-
-.project {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    text-align: left;
-    padding: 16px 20px;
-    border-radius: 16px;
-    background: var(--item-bg);
-    border: 1px solid var(--item-border);
-    transition: all 0.3s ease;
-}
-
-.project:hover {
-    transform: translateY(-2px) translateX(4px);
-    border-color: var(--accent);
-    background: rgba(181, 140, 255, 0.08);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-}
-
-.project-title {
-    font-size: 15px;
-    font-weight: 700;
-    margin-bottom: 4px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: #fff;
-}
-
-.project-description {
-    color: var(--text-muted);
-    font-size: 13px;
-}
-
-.project-tag {
-    font-size: 10px;
-    padding: 3px 8px;
-    border-radius: 12px;
-    background: rgba(181, 140, 255, 0.2);
-    color: var(--accent-bright);
-    border: 1px solid rgba(181, 140, 255, 0.3);
-}
-
-/* MUSIC PLAYER */
-.music-player {
-    background: var(--item-bg);
-    border: 1px solid var(--item-border);
-    border-radius: 20px;
-    padding: 18px;
-    transition: all 0.3s ease;
-}
-
-.music-player:hover {
-    border-color: var(--accent);
-    box-shadow: 0 0 20px rgba(181, 140, 255, 0.15);
-}
-
-.music-main {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 14px;
-}
-
-.music-btn {
-    width: 48px;
-    height: 48px;
-    border: none;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #ffffff, var(--accent));
-    color: #030305;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    transition: all 0.3s ease;
-    box-shadow: 0 0 15px var(--accent-glow);
-    flex-shrink: 0;
-}
-
-.music-btn:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 25px var(--accent-bright);
-}
-
-.music-details {
-    text-align: left;
-    flex: 1;
-    overflow: hidden;
-}
-
-.music-title {
-    font-size: 14px;
-    font-weight: 700;
-    color: #fff;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.music-artist {
-    color: var(--text-muted);
-    font-size: 12px;
-    margin-top: 2px;
-}
-
-/* SÓNG NHẠC */
-.music-wave {
-    display: flex;
-    align-items: flex-end;
-    gap: 3px;
-    height: 18px;
-}
-
-.wave-bar {
-    width: 3px;
-    height: 100%;
-    background: var(--accent-bright);
-    border-radius: 3px;
-    animation: wave 1.2s ease-in-out infinite alternate;
-    animation-play-state: paused;
-    box-shadow: 0 0 6px var(--accent);
-}
-
-.wave-bar:nth-child(2) { animation-delay: 0.2s; }
-.wave-bar:nth-child(3) { animation-delay: 0.4s; }
-
-.playing .wave-bar {
-    animation-play-state: running;
-}
-
-@keyframes wave {
-    0% { height: 4px; }
-    100% { height: 18px; }
-}
-
-/* THANH PROGRESS NHẠC */
-.progress-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.time-text {
-    font-size: 11px;
-    color: var(--text-muted);
-    min-width: 32px;
-}
-
-.progress-bar {
-    flex: 1;
-    height: 6px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-}
-
-.progress-fill {
-    height: 100%;
-    width: 0%;
-    background: linear-gradient(90deg, var(--accent), #ffffff);
-    border-radius: 10px;
-    box-shadow: 0 0 8px var(--accent);
-    transition: width 0.1s linear;
-}
-
-/* FOOTER */
-.footer {
-    margin-top: 28px;
-    color: #666677;
-    font-size: 12px;
-}
-
-/* KEYFRAMES & ANIMATION */
-@keyframes textGlowPulse {
-    from { filter: drop-shadow(0 0 8px rgba(181, 140, 255, 0.4)); }
-    to { filter: drop-shadow(0 0 16px rgba(181, 140, 255, 0.8)); }
-}
-
-@keyframes rotateGlow {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-@keyframes pulse {
-    0% { transform: scale(0.98); opacity: 0.8; }
-    100% { transform: scale(1.05); opacity: 1; }
-}
-
-@keyframes introCard {
-    from {
-        opacity: 0;
-        transform: translateY(40px) scale(0.95);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
-
-/* RESPONSIVE */
-@media (max-width: 480px) {
-    .card {
-        padding: 35px 20px;
-    }
-    .links {
-        grid-template-columns: 1fr;
-    }
+@media(max-width:480px){
+ .nav{height:56px}
+ .hero h1{letter-spacing:-4px}
+ .card,.contact,.osu{padding:20px}
+ .hero-actions .btn{width:100%}
 }
 </style>
 </head>
-
 <body>
 
-<!-- OVERLAY KHI VÀO TRANG -->
-<div class="intro-overlay" id="introOverlay">
-    <div class="intro-logo">MINI DEV</div>
+<div id="intro">
+ <div class="intro-inner">
+  <div class="intro-kicker">INITIALIZING PROFILE</div>
+  <div class="intro-name">ARZUFULINE</div>
+  <div class="intro-line"></div>
+ </div>
 </div>
 
-<div class="background"></div>
-<div class="particles" id="particles"></div>
+<nav class="nav">
+ <a class="logo" href="#home">ARZU<span style="color:var(--purple2)">/</span><b>FULINE</b></a>
+ <div class="nav-links">
+  <a href="#projects">PROJECTS</a>
+  <a href="#experience">EXPERIENCE</a>
+  <a href="#skills">SKILLS</a>
+  <a href="#osu">OSU!</a>
+  <a href="#contact">CONTACT</a>
+ </div>
+ <button class="nav-btn" id="glowBtn" title="Toggle glow">✦</button>
+</nav>
 
-<div class="wrapper">
-    <main class="card" id="tiltCard">
+<main id="home" class="wrap">
+ <section class="hero">
+  <div class="reveal">
+   <div class="eyebrow">// MINI DEV · AKARI FOUNDER</div>
+   <h1>ARZU<br><span class="purple">FULINE</span></h1>
+   <p class="hero-sub">
+    <strong>Mini Dev</strong> building bots, tools and small digital projects.
+    Founder of <strong>Akari</strong>, creator of <strong>Kuriii</strong> and developer of <strong>KrayKazano Bot</strong>.
+   </p>
+   <div class="signature">— ArzuFuline</div>
+   <div class="hero-actions">
+    <a class="btn primary" href="#projects">VIEW PROJECTS ↘</a>
+    <a class="btn secondary" href="#contact">GET IN TOUCH →</a>
+   </div>
+  </div>
+  <div class="avatar-stage reveal">
+   <div class="avatar-frame float">
+    <span class="corner c1"></span><span class="corner c2"></span><span class="corner c3"></span><span class="corner c4"></span>
+    <img src="https://storage.waifuwall.com/characters/000/000/480/480.webp" alt="ArzuFuline avatar">
+   </div>
+  </div>
+ </section>
 
-        <!-- BADGES -->
-        <div class="badge-container">
-            <span class="badge"><i class="fa-solid fa-code"></i> Mini Dev</span>
-            <span class="badge"><i class="fa-solid fa-crown"></i> Akari Founder</span>
-        </div>
+ <section id="projects" class="section">
+  <div class="section-head reveal">
+   <h2 class="section-title">PROJECTS</h2><span class="section-index">01 / 04</span>
+  </div>
+  <div class="grid">
+   <article class="card reveal">
+    <div class="project-top"><span class="project-num">PROJECT_01</span><span class="project-icon">◈</span></div>
+    <h3>Kuriii</h3>
+    <p>A Discord bot project focused on interaction, personality and useful server features.</p>
+    <div class="tags"><span class="tag">Discord Bot</span><span class="tag">Python</span><span class="tag">AI</span></div>
+   </article>
+   <article class="card reveal">
+    <div class="project-top"><span class="project-num">PROJECT_02</span><span class="project-icon">◇</span></div>
+    <h3>KrayKazano Bot</h3>
+    <p>A second bot project built as part of the ArzuFuline project ecosystem.</p>
+    <div class="tags"><span class="tag">Discord</span><span class="tag">Python</span><span class="tag">Bot</span></div>
+   </article>
+   <article class="card reveal">
+    <div class="project-top"><span class="project-num">PROJECT_03</span><span class="project-icon">✦</span></div>
+    <h3>Akari</h3>
+    <p>The project identity founded and developed by ArzuFuline.</p>
+    <div class="tags"><span class="tag">Founder</span><span class="tag">Community</span><span class="tag">Project</span></div>
+   </article>
+   <article class="card reveal">
+    <div class="project-top"><span class="project-num">PROJECT_04</span><span class="project-icon">⌁</span></div>
+    <h3>Small Experiments</h3>
+    <p>Web interfaces, automation ideas and small experiments that turn concepts into working projects.</p>
+    <div class="tags"><span class="tag">Web</span><span class="tag">Automation</span><span class="tag">Ideas</span></div>
+   </article>
+  </div>
+ </section>
 
-        <!-- AVATAR -->
-        <div class="avatar-container">
-            <img class="avatar" src="https://storage.waifuwall.com/characters/000/000/480/480.webp" alt="Avatar">
-        </div>
+ <section id="experience" class="section">
+  <div class="section-head reveal">
+   <h2 class="section-title">EXPERIENCE</h2><span class="section-index">02 / 04</span>
+  </div>
+  <div class="timeline reveal">
+   <div class="time-item"><span class="dot"></span><div class="time">CURRENT</div><h3>Akari — Founder</h3><p>Leading the Akari project direction and building its digital ecosystem.</p></div>
+   <div class="time-item"><span class="dot"></span><div class="time">BUILDING</div><h3>Discord Bot Development</h3><p>Developing Kuriii and KrayKazano with Python and Discord-oriented tooling.</p></div>
+   <div class="time-item"><span class="dot"></span><div class="time">EXPLORING</div><h3>Web & Creative Development</h3><p>Experimenting with interactive interfaces, visual effects and personal web projects.</p></div>
+  </div>
+ </section>
 
-        <!-- NAME -->
-        <h1 class="name">Arzu <span class="glow-text">Fuline</span></h1>
+ <section id="skills" class="section">
+  <div class="section-head reveal">
+   <h2 class="section-title">SKILLS</h2><span class="section-index">03 / 04</span>
+  </div>
+  <div class="card reveal">
+   <div class="skills">
+    <span class="skill python">Python</span>
+    <span class="skill ruby">Ruby</span>
+    <span class="skill python">RubyPython</span>
+    <span class="skill">Discord.py</span>
+    <span class="skill">AI / APIs</span>
+    <span class="skill">HTML</span>
+    <span class="skill">CSS</span>
+    <span class="skill">JavaScript</span>
+    <span class="skill">GitHub</span>
+    <span class="skill">Automation</span>
+   </div>
+  </div>
+ </section>
 
-        <!-- BIO -->
-        <p class="bio">
-            A passionate <b>Mini Dev</b> crafting digital experiences.<br>
-            Leading <b>Akari Project</b> & Developing <b>Kuriii Bot</b>.
-        </p>
+ <section id="osu" class="section">
+  <div class="section-head reveal">
+   <h2 class="section-title">OSU! PROFILE</h2><span class="section-index">04 / 04</span>
+  </div>
+  <div class="osu reveal">
+   <div>
+    <div class="osu-label">RHYTHM / AIM / READING</div>
+    <h3>ARZUFULINE × osu!</h3>
+    <p>A separate corner for the rhythm-game side of the profile. Replace the button link below with your actual osu! profile URL.</p>
+    <div class="osu-stats">
+     <div class="stat"><b>~340K</b><span>GLOBAL RANK</span></div>
+     <div class="stat"><b>200pp</b><span>TOP PLAY GOAL</span></div>
+     <div class="stat"><b>5★+</b><span>COMFORT ZONE</span></div>
+    </div>
+   </div>
+   <a class="btn primary osu-button" href="#" onclick="alert('Thay href=\"#\" bằng link profile osu! của bạn nhé.');return false;">OPEN OSU! PROFILE ↗</a>
+  </div>
+ </section>
 
-        <!-- SOCIAL LINKS -->
-        <div class="links">
-            <a class="link" href="https://discord.com/users/1046071845809573948" target="_blank"><i class="fa-brands fa-discord"></i> Discord</a>
-            <a class="link" href="https://github.com/luong123465-eng" target="_blank"><i class="fa-brands fa-github"></i> GitHub</a>
-            <a class="link" href="https://web.facebook.com/ng.neihh/" target="_blank"><i class="fa-brands fa-facebook"></i> Facebook</a>
-            <a class="link" href="#" target="_blank"><i class="fa-solid fa-globe"></i> Website</a>
-        </div>
+ <section id="contact" class="section">
+  <div class="contact reveal">
+   <h2>GET IN TOUCH</h2>
+   <p>Want to talk about a project, bot, web idea or just say hi?</p>
+   <div class="hero-actions" style="justify-content:center;margin-top:0">
+    <a class="btn primary" href="https://discord.com/users/1046071845809573948" target="_blank">DISCORD ↗</a>
+    <a class="btn secondary" href="https://github.com/luong123465-eng" target="_blank">GITHUB ↗</a>
+   </div>
+  </div>
+ </section>
 
-        <!-- PROJECTS -->
-        <div class="section-title">Projects</div>
-        <div class="projects">
-            <div class="project">
-                <div class="project-info">
-                    <div class="project-title">
-                        Kuriii Bot
-                        <span class="project-tag">Discord Bot</span>
-                    </div>
-                    <div class="project-description">A feature-rich Discord bot developed by Mini Dev.</div>
-                </div>
-                <i class="fa-solid fa-robot" style="color: var(--accent-bright); font-size: 18px;"></i>
-            </div>
-            
-            <div class="project">
-                <div class="project-info">
-                    <div class="project-title">
-                        Akari Project
-                        <span class="project-tag">Main Project</span>
-                    </div>
-                    <div class="project-description">Founded and led by Akari Founder.</div>
-                </div>
-                <i class="fa-solid fa-wand-magic-sparkles" style="color: var(--accent-bright); font-size: 18px;"></i>
-            </div>
-        </div>
-
-        <!-- MUSIC PLAYER -->
-        <div class="music-player" id="musicPlayer">
-            <div class="music-main">
-                <button class="music-btn" id="playBtn">
-                    <i class="fa-solid fa-play" id="playIcon"></i>
-                </button>
-                <div class="music-details">
-                    <div class="music-title">Favorite Track</div>
-                    <div class="music-artist">Akari Soundtracks</div>
-                </div>
-                <div class="music-wave" id="musicWave">
-                    <div class="wave-bar"></div>
-                    <div class="wave-bar"></div>
-                    <div class="wave-bar"></div>
-                </div>
-            </div>
-            
-            <div class="progress-container">
-                <span class="time-text" id="currentTime">0:00</span>
-                <div class="progress-bar" id="progressBar">
-                    <div class="progress-fill" id="progressFill"></div>
-                </div>
-                <span class="time-text" id="duration">0:00</span>
-            </div>
-        </div>
-
-        <audio id="bgMusic" src="audio.mp3" preload="metadata"></audio>
-
-        <!-- FOOTER -->
-        <div class="footer">
-            © 2026 Mini Dev • Akari Founder
-        </div>
-    </main>
-</div>
+ <div class="footer">© 2026 ARZUFULINE · AKARI FOUNDER · BUILT WITH PURPLE</div>
+</main>
 
 <script>
-    // INTRO OVERLAY EFFECT
-    window.addEventListener('load', () => {
-        setTimeout(() => {
-            const overlay = document.getElementById('introOverlay');
-            overlay.classList.add('hidden');
-        }, 800);
-    });
+window.addEventListener('load',()=>{
+ setTimeout(()=>document.getElementById('intro').classList.add('hide'),1500);
+});
+const observer=new IntersectionObserver(entries=>{
+ entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show')});
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
 
-    // PARTICLES GENERATOR
-    const container = document.getElementById('particles');
-    for (let i = 0; i < 35; i++) {
-        const p = document.createElement('div');
-        p.className = 'particle';
-        p.style.left = Math.random() * 100 + 'vw';
-        p.style.animationDuration = (Math.random() * 5 + 3) + 's';
-        p.style.animationDelay = (Math.random() * 4) + 's';
-        container.appendChild(p);
-    }
+document.getElementById('glowBtn').addEventListener('click',()=>{
+ document.body.classList.toggle('low-glow');
+ document.body.style.setProperty('--purple',document.body.classList.contains('low-glow')?'#7650ad':'#9b5cff');
+});
 
-    // TILT CARD EFFECT ON MOUSEMOVE
-    const card = document.getElementById('tiltCard');
-    document.addEventListener('mousemove', (e) => {
-        const x = (window.innerWidth / 2 - e.clientX) / 35;
-        const y = (window.innerHeight / 2 - e.clientY) / 35;
-        card.style.transform = `rotateY(${-x}deg) rotateX(${y}deg)`;
-    });
-
-    // MUSIC PLAYER SCRIPT
-    const audio = document.getElementById('bgMusic');
-    const playBtn = document.getElementById('playBtn');
-    const playIcon = document.getElementById('playIcon');
-    const player = document.getElementById('musicPlayer');
-    const progressFill = document.getElementById('progressFill');
-    const progressBar = document.getElementById('progressBar');
-    const currentTimeEl = document.getElementById('currentTime');
-    const durationEl = document.getElementById('duration');
-
-    function formatTime(seconds) {
-        if (isNaN(seconds)) return "0:00";
-        const mins = Math.floor(seconds / 60);
-        const secs = Math.floor(seconds % 60);
-        return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
-    }
-
-    playBtn.addEventListener('click', () => {
-        if (audio.paused) {
-            audio.play();
-            playIcon.className = 'fa-solid fa-pause';
-            player.classList.add('playing');
-        } else {
-            audio.pause();
-            playIcon.className = 'fa-solid fa-play';
-            player.classList.remove('playing');
-        }
-    });
-
-    audio.addEventListener('loadedmetadata', () => {
-        durationEl.textContent = formatTime(audio.duration);
-    });
-
-    audio.addEventListener('timeupdate', () => {
-        const percent = (audio.currentTime / audio.duration) * 100;
-        progressFill.style.width = percent + '%';
-        currentTimeEl.textContent = formatTime(audio.currentTime);
-    });
-
-    progressBar.addEventListener('click', (e) => {
-        const rect = progressBar.getBoundingClientRect();
-        const clickX = e.clientX - rect.left;
-        const width = rect.width;
-        audio.currentTime = (clickX / width) * audio.duration;
-    });
-
-    audio.addEventListener('ended', () => {
-        playIcon.className = 'fa-solid fa-play';
-        player.classList.remove('playing');
-        progressFill.style.width = '0%';
-    });
+document.addEventListener('mousemove',e=>{
+ const frame=document.querySelector('.avatar-frame');
+ if(!frame)return;
+ const x=(window.innerWidth/2-e.clientX)/90;
+ const y=(window.innerHeight/2-e.clientY)/90;
+ frame.style.transform=`rotateY(${-x}deg) rotateX(${y}deg) rotate(2deg)`;
+});
 </script>
-
 </body>
 </html>
