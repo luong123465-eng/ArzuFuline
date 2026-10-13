@@ -214,8 +214,8 @@ progress.addEventListener('input',()=>{if(Number.isFinite(audio.duration)&&audio
 // Replace these placeholders with your own quotes and credits.
 const quotes=[
  {text:'Đoạn đường phía trước rất đẹp, nên đừng sống mãi trong quá khứ...',credit:'Unknown'},
- {text:'[TỰ ĐIỀN QUOTE 2 Ở ĐÂY]',credit:'[TÊN TÁC GIẢ / NGUỒN]'},
- {text:'[TỰ ĐIỀN QUOTE 3 Ở ĐÂY]',credit:'[TÊN TÁC GIẢ / NGUỒN]'}
+ {text:'Mong bạn hãy dịu dàng vói chính mình, bởi bạn đã từng cố gắng rất nhiều trong những ngày tháng chẳng mấy ai nhìn thấy...',credit:'Unknown'},
+ {text:'Khi năng lực chưa đủ gánh ước mơ, điều duy nhất bạn nên làm là im lặng và tiếp tục mài giũa bản thân 🌱:)',credit:'Unknown'}
 ];
 const quoteText=document.getElementById('random-quote'),quoteCredit=document.getElementById('quote-credit');let lastQuote=-1;
 function showRandomQuote(){if(!quoteText||!quotes.length)return;let index=0;if(quotes.length>1){do{index=Math.floor(Math.random()*quotes.length)}while(index===lastQuote)}lastQuote=index;quoteText.textContent=quotes[index].text;quoteCredit.textContent='— '+quotes[index].credit}
@@ -223,7 +223,7 @@ document.getElementById('new-quote')?.addEventListener('click',showRandomQuote);
 showRandomQuote();
 
 // Replace this placeholder with your own secret letter.
-const secretLetter='[TỰ ĐIỀN NỘI DUNG LÁ THƯ BÍ MẬT Ở ĐÂY]';
+const secretLetter='Hãy luôn mỉm cười nhé, tớ luôn ở đây để lắng nghe cuộc đời của cậu!!';
 document.getElementById('secret-letter-content').textContent=secretLetter;
 document.getElementById('secret-preview').textContent=secretLetter;
 const letterModal=document.getElementById('letter-modal');
